@@ -1,18 +1,38 @@
-project(TWSAPI VERSION 9.71.0)
+project(TWSCPPAPI VERSION 9.71.0)
 
-set(LIBRARY_NAME tws_cpp_api)
+set(TARGET_NAME TwsCppApi)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Src)
-
 file(GLOB SOURCES ${SRC_DIR}/*.cpp)
 
 add_definitions(-D_REENTRANT -D_DEBUG)
  
-include_directories(${API_INCLUDE_DIR} ${SRC_DIR} 
+include_directories(#${API_INCLUDE_DIR} 
+					${SRC_DIR} 
 					${IB_POSIX_CLIENT_INCLUDE_DIR} ${IB_POSIX_CLIENT_SOURCE_DIR})
 
-add_library(${LIBRARY_NAME} ${API_INCLUDES} ${SOURCES} 
+add_library(${TARGET_NAME} ${SOURCE} #${API_INCLUDES} 
 			${IB_POSIX_CLIENT_SOURCES} ${IB_POSIX_CLIENT_INCLUDES})
-set_source_files_properties(${API_INCLUDES} ${IB_POSIX_CLIENT_INCLUDES} ${IB_POSIX_CLIENT_SOURCES}
+set_source_files_properties(#${API_INCLUDES} 
+							${IB_POSIX_CLIENT_INCLUDES} ${IB_POSIX_CLIENT_SOURCES}
 						    PROPERTIES HEADER_FILE_ONLY TRUE)
-target_compile_options(${LIBRARY_NAME} PRIVATE -Wall PUBLIC -std=gnu++0x)
+target_compile_options(${TARGET_NAME} PRIVATE -Wall PUBLIC -std=gnu++0x)
+
+set(EXPORT_NAME ${TARGET_NAME}Targets)
+install(TARGETS ${TARGET_NAME} EXPORT ${EXPORT_NAME}
+	LIBRARY 	DESTINATION lib
+	ARCHIVE 	DESTINATION lib
+	INCLUDES 	DESTINATION include)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}ConfigVersion.cmake
+  VERSION ${TWSAPI_VERSION}
+  COMPATIBILITY ExactVersion)
+
+export(EXPORT ${EXPORT_NAME} FILE ${CMAKE_CURRENT_BINARY_DIR}/${EXPORT_NAME}.cmake NAMESPACE TWSCPPAPI)
+
+configure_package_config_file(${TARGET_NAME}Config.cmake.in ${TARGET_NAME}Config.cmake INSTALL_DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
