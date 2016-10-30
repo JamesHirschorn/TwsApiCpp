@@ -9,7 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Src)
 file(GLOB SOURCES ${SRC_DIR}/*.cpp)
 
-add_definitions(-D_REENTRANT -D_DEBUG)
+add_definitions(-D_REENTRANT)
 
 set(IB_POSIX_CLIENT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../../source/PosixClient)
 set(IB_POSIX_CLIENT_INCLUDE_DIR ${IB_POSIX_CLIENT_SRC}/Shared)
@@ -29,9 +29,9 @@ target_compile_options(${TARGET_NAME} PRIVATE -Wall PUBLIC -std=gnu++0x)
 
 set(EXPORT_NAME ${TARGET_NAME}Targets)
 install(TARGETS ${TARGET_NAME} EXPORT ${EXPORT_NAME}
-	LIBRARY 	DESTINATION lib
-	ARCHIVE 	DESTINATION lib
-	INCLUDES 	DESTINATION include)
+		LIBRARY 	DESTINATION lib
+		ARCHIVE 	DESTINATION lib
+		INCLUDES 	DESTINATION include)
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
@@ -41,6 +41,6 @@ write_basic_package_version_file(
 
 export(EXPORT ${EXPORT_NAME} FILE ${CMAKE_CURRENT_BINARY_DIR}/${EXPORT_NAME}.cmake)
 
-set(TARGET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
+set(TARGET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} ${IB_POSIX_CLIENT_INCLUDE_DIR})
 configure_package_config_file(${TARGET_NAME}Config.cmake.in ${TARGET_NAME}Config.cmake INSTALL_DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
