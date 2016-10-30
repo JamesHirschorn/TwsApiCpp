@@ -1,4 +1,8 @@
+cmake_minimum_required(VERSION 3.1.0)
+
 project(TWSAPICPP_TEST VERSION 1.0.0)
+
+find_package(TwsCppApi 9.71.0)
 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Src)
 
@@ -10,7 +14,7 @@ find_package(Threads REQUIRED)
 include_directories(${API_INCLUDE_DIR} ${IB_POSIX_CLIENT_INCLUDE_DIR})
 
 add_executable(Test ${SOURCE_DIR}/Test.cpp)
-target_link_libraries(Test tws_cpp_api Threads::Threads)
+target_link_libraries(Test TwsCppApi Threads::Threads)
 target_compile_options(Test PRIVATE -Wall)
 
 add_executable(History ${SOURCE_DIR}/History.cpp)

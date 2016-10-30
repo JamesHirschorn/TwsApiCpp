@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.1.0)
+
 project(TWSCPPAPI VERSION 9.71.0)
 
 set(TARGET_NAME TwsCppApi)
@@ -13,7 +15,7 @@ include_directories(#${API_INCLUDE_DIR}
 					${SRC_DIR} 
 					${IB_POSIX_CLIENT_INCLUDE_DIR} ${IB_POSIX_CLIENT_SOURCE_DIR})
 
-add_library(${TARGET_NAME} ${SOURCE} #${API_INCLUDES} 
+add_library(${TARGET_NAME} ${SOURCES} #${API_INCLUDES} 
 			${IB_POSIX_CLIENT_SOURCES} ${IB_POSIX_CLIENT_INCLUDES})
 set_source_files_properties(#${API_INCLUDES} 
 							${IB_POSIX_CLIENT_INCLUDES} ${IB_POSIX_CLIENT_SOURCES}
@@ -32,7 +34,8 @@ write_basic_package_version_file(
   VERSION ${TWSAPI_VERSION}
   COMPATIBILITY ExactVersion)
 
-export(EXPORT ${EXPORT_NAME} FILE ${CMAKE_CURRENT_BINARY_DIR}/${EXPORT_NAME}.cmake NAMESPACE TWSCPPAPI)
+export(EXPORT ${EXPORT_NAME} FILE ${CMAKE_CURRENT_BINARY_DIR}/${EXPORT_NAME}.cmake)
 
+set(TARGET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 configure_package_config_file(${TARGET_NAME}Config.cmake.in ${TARGET_NAME}Config.cmake INSTALL_DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
