@@ -14,16 +14,13 @@ add_definitions(-D_REENTRANT)
 set(IB_POSIX_CLIENT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../../source/PosixClient)
 set(IB_POSIX_CLIENT_INCLUDE_DIR ${IB_POSIX_CLIENT_SRC}/Shared)
 set(IB_POSIX_CLIENT_SOURCE_DIR ${IB_POSIX_CLIENT_SRC}/src)
-include_directories(#${API_INCLUDE_DIR} 
-					#${SRC_DIR} 
-					${IB_POSIX_CLIENT_INCLUDE_DIR} 
+include_directories(${IB_POSIX_CLIENT_INCLUDE_DIR} 
 					${IB_POSIX_CLIENT_SOURCE_DIR}
 					)
 
-add_library(${TARGET_NAME} ${SOURCES} #${API_INCLUDES} 
+add_library(${TARGET_NAME} ${SOURCES} 
 			${IB_POSIX_CLIENT_SOURCES} ${IB_POSIX_CLIENT_INCLUDES})
-set_source_files_properties(#${API_INCLUDES} 
-							${IB_POSIX_CLIENT_INCLUDES} ${IB_POSIX_CLIENT_SOURCES}
+set_source_files_properties(${IB_POSIX_CLIENT_INCLUDES} ${IB_POSIX_CLIENT_SOURCES}
 						    PROPERTIES HEADER_FILE_ONLY TRUE)
 target_compile_options(${TARGET_NAME} PRIVATE -Wall PUBLIC -std=gnu++0x)
 
